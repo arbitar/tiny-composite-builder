@@ -1,0 +1,17 @@
+{
+  "name": "extensible-",
+  "author": "aurbi <npm@arbi.in>",
+  "description": "Framework for taking base objects and adding extensions using a builder pattern, but with full and strict compile-time type system support.",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rm -rf dist/*",
+    "build": "tsc",
+    "prepack": "npm run clean && npm run build"
+  },
+  "main": "./dist/index.js",
+  "types": "./types/index.d.ts",
+  "devDependencies": {
+    "typescript": "^5.7.2"
+  }
+}
