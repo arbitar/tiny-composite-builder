@@ -1,5 +1,5 @@
 {
-  "name": "extensible-",
+  "name": "@aurbi/extensible",
   "author": "aurbi <npm@arbi.in>",
   "description": "Framework for taking base objects and adding extensions using a builder pattern, but with full and strict compile-time type system support.",
   "version": "1.0.0",
@@ -13,5 +13,13 @@
   "types": "./types/index.d.ts",
   "devDependencies": {
     "typescript": "^5.7.2"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arbitar/extensible.git"
+  },
+  "bugs": {
+    "url": "https://github.com/arbitar/extensible/issues"
+  },
+  "homepage": "https://github.com/arbitar/extensible#readme"
 }
