@@ -1,4 +1,4 @@
-import { ExtensibleBuilder, ExtensibleBuilderFunction } from "../src";
+import { IExtension } from "../types";
 import { IExtensibleBase } from "../types/IExtensibleBase";
 
 export interface IMyBase {
@@ -8,12 +8,7 @@ export interface IMyBase {
 export class MyBase
 implements IExtensibleBase<MyBase>
 {
-  static Create = <TNext extends ExtensibleBuilder<MyBase, any>>(
-    b: ExtensibleBuilderFunction<MyBase, ExtensibleBuilder<MyBase>, TNext>,
-    ...args: ConstructorParameters<typeof MyBase>
-  ) => ExtensibleBuilder.Create(MyBase, b, ...args);
-
-  constructor() {}
+  constructor(public Extensions: IExtension<MyBase>[]) {}
 
   /**
    * Base

@@ -1,7 +1,11 @@
-import { MethodsOfExts } from "./Utility";
+import { IExtension } from "./IExtension";
+import { ConstructedExtensions, MethodsOfExts } from "./Utility";
 
 /** Represents any base class type that can be extended */
-export type IExtensibleBaseType = {};
+export type IExtensibleBaseType<
+  TBase extends IExtensibleBaseType = IExtensibleBaseType<any>,
+  TExts extends Array<IExtension<TBase>> = Array<IExtension<TBase>>
+> = { Extensions: TExts };
 
 /**
  * Represents a specific extensible base.
@@ -12,8 +16,10 @@ export type IExtensibleBaseType = {};
  * TBaseType interface, however.
  */
 export type IExtensibleBase<TBaseType extends IExtensibleBaseType, EE = null> =
-  IExtensibleBaseType &
-  (
+  IExtensibleBaseType<
+    TBaseType,
+    ConstructedExtensions<TBaseType, EE>
+  > & (
     EE extends Array<any>
     ? (TBaseType & MethodsOfExts<TBaseType, EE>)
     : TBaseType

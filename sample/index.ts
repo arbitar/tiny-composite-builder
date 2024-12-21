@@ -1,21 +1,23 @@
+import { ExtensibleBuilder } from "../src";
 import { ExtA, ExtB, ExtC } from "./exts";
 import { MyBase } from "./MyBase";
 
-const b1 = MyBase.Create(b => b);
+const b1 = ExtensibleBuilder.Create(MyBase, b => b);
   console.log(b1.funcBase());
 
 console.log('=====');
 
-const b2 = MyBase.Create(b => {
+const b2 = ExtensibleBuilder.Create(MyBase, b => {
   const wa = b.with(ExtA);
   return wa;
 });
   console.log(b2.funcBase());
   console.log(b2.FuncA(1));
+  b2.Extensions
 
 console.log('=====');
 
-const b3 = MyBase.Create(b => {
+const b3 = ExtensibleBuilder.Create(MyBase, b => {
   const wa = b.with(ExtA);
   const wb = wa.with(ExtB, "");
   return wb;
@@ -27,7 +29,7 @@ const b3 = MyBase.Create(b => {
 
 console.log('=====');
 
-const b4 = MyBase.Create(b => b
+const b4 = ExtensibleBuilder.Create(MyBase, b => b
   .with(ExtB, "")
   .with(ExtC)
 );

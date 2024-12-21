@@ -40,7 +40,7 @@ export class ExtensibleBuilder<
    * @returns New instance of ExtensibleBase object with the requested extensions present
    */
   static Create<
-    T extends IExtensibleBaseType,
+    T extends IExtensibleBaseType<T>,
     B extends ExtensibleBuilder<T, any>,
   >(
     base: Constructor<T>,
@@ -73,7 +73,6 @@ export class ExtensibleBuilder<
     ...args: TExtArgs
   ): BuilderWithExt<TBase, TSelf, ConstructedType<TNewExt>> {
     const newSelf = (this as unknown as BuilderWithExt<TBase, TSelf, ConstructedType<TNewExt>>);
-    // const ext = new extClass(newSelf, ...args) as ConstructedType<TNewExt>;
     newSelf._extensions.push([extClass, args]);
     return newSelf;
   }
