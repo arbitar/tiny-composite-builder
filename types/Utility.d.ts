@@ -1,6 +1,6 @@
 import { IExtension } from "./IExtension";
-import { ExtensibleBuilder } from "../src/ExtensibleBuilder";
-import { IExtensibleBaseType } from "./IExtensibleBase";
+import { Builder } from "./Builder";
+import { IBaseHint } from "./IBase";
 
 /**
  * Represent a union (A|B) as an intersection (A&B)
@@ -18,7 +18,7 @@ export type UnionToIntersection<U> =
 /**
  * Represents all the public methods of ALL the Exts provided.
  */
-export type MethodsOfExts<TBase extends IExtensibleBaseType, EE> =
+export type MethodsOfExts<TBase extends IBaseHint, EE> =
   EE extends Array<IExtension<TBase>>
   ? UnionToIntersection< // {a(): void}|{b(): void} => {a(): void}&{b(): void}
     MethodsOfExt<TBase,
@@ -37,7 +37,7 @@ export type MethodsOfExts<TBase extends IExtensibleBaseType, EE> =
  * Represents the prepared extensions of a particular Builder type
  */
 export type ExtConsOfBuilder<TBase> =
-  TBase extends ExtensibleBuilder<infer T, infer EE>
+  TBase extends Builder<infer T, infer EE>
   ? (
     EE extends Array<any>
     ? EE // builder has extensions: these are them!
@@ -64,7 +64,7 @@ export type ConstructedType<T> = T extends Constructor<infer U> ? U : never;
 /**
  * Get all public methods of a given extension class
  */
-export type MethodsOfExt<TBase extends IExtensibleBaseType, E> =
+export type MethodsOfExt<TBase extends IBaseHint, E> =
   E extends IExtension<TBase> // if this is an extension of the same base interface type...
   ? (
     // a value cannot exist without a valid key type. never is ... never valid.
@@ -78,19 +78,19 @@ export type MethodsOfExt<TBase extends IExtensibleBaseType, E> =
  * added, too.
  */
 export type BuilderWithExt<
-  TBase extends IExtensibleBaseType,
+  TBase extends IBaseHint,
   TBuilder,
   TNewExt extends IExtension<TBase>
 > =
   TBuilder extends IfEq< // If TBuilder ...
     TBase, // ... has the same base interface type as ...
     BaseOfExt<TNewExt>, // ... the extension we're adding .... 
-    ExtensibleBuilder<TBase, infer EE> // ... continue, and infer the current extension list EE
+    Builder<TBase, infer EE> // ... continue, and infer the current extension list EE
   >
   ? (
     EE extends Array<ExtensionConstructionElement<TBase>> // if EE is an array, we have existing extensions.
-    ? ExtensibleBuilder<TBase, [...EE, ExtensionConstructionElement<TBase, TNewExt>]> // add the new one to the existing list.
-    : ExtensibleBuilder<TBase, [ExtensionConstructionElement<TBase, TNewExt>]> // ... otherwise, make a new list with this ext.
+    ? Builder<TBase, [...EE, ExtensionConstructionElement<TBase, TNewExt>]> // add the new one to the existing list.
+    : Builder<TBase, [ExtensionConstructionElement<TBase, TNewExt>]> // ... otherwise, make a new list with this ext.
   ) : never;
 
 /**
@@ -116,7 +116,7 @@ export type BaseOfExt<TExt> =
  * Element of a builder's extension construction array
  */
 export type ExtensionConstructionElement<
-  TBase extends IExtensibleBaseType,
+  TBase extends IBaseHint,
   TExt extends IExtension<TBase> = IExtension<TBase>
 > = 
   [Constructor<TExt>, ConstructorParameters<Constructor<TExt>>];
@@ -124,14 +124,14 @@ export type ExtensionConstructionElement<
 /**
  * A Builder's extension construction array
  */
-export type ExtensionConstructionArray<TBase extends IExtensibleBaseType> =
+export type ExtensionConstructionArray<TBase extends IBaseHint> =
   Array<ExtensionConstructionElement<TBase>>
 
 /**
  * Given an extension construction type array, represent the array of extensions it'd build
  */
 export type ConstructedExtensions<
-  TBase extends IExtensibleBaseType,
+  TBase extends IBaseHint,
   EE
 > =
   EE extends ExtensionConstructionArray<TBase>

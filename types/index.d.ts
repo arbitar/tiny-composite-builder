@@ -1,2 +1,2 @@
 export { IExtension } from "./IExtension";
-export { IExtensibleBase, IExtensibleBaseType } from "./IExtensibleBase";
+export { IBase } from "./IBase";

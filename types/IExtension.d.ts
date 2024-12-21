@@ -1,4 +1,4 @@
-import { IExtensibleBaseType } from "./IExtensibleBase";
+import { IBaseHint } from "./IBase";
 
 /**
  * Represents an extension class that can be added to TBase.
@@ -7,5 +7,5 @@ import { IExtensibleBaseType } from "./IExtensibleBase";
  * 
  * `constructor(public Base: TBase, ...otherArgs: any){ ... }`
  */
-export type IExtension<TBase extends IExtensibleBaseType> =
+export type IExtension<TBase extends IBaseHint> =
   { Base: TBase }
