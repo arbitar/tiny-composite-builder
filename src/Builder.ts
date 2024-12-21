@@ -32,7 +32,7 @@ export class Builder<
     T extends IBaseHint<T>,
     B extends Builder<T, any>,
   > (
-    base: Constructor<IBase<T>>,
+    base: Constructor<T>,
     builder: BuilderFunction<T, Builder<T>, B>,
     ...args: any
   ): IBase<T, ConstructedExtensions<T, ExtConsOfBuilder<B>>> {

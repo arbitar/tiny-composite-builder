@@ -18,4 +18,4 @@ export type IBaseHint<
 export type IBase<TBase extends IBaseHint, EE = null> =
   EE extends Array<any>
   ? (TBase & MethodsOfExts<TBase, EE> & IBaseHint<TBase, EE>)
-  : (TBase & IBaseHint<TBase>)
+  : (TBase & IBaseHint<TBase, Array<IExtension<TBase>>>)
