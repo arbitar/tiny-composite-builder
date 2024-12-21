@@ -2,7 +2,10 @@ import { IExtension } from "./IExtension";
 import { MethodsOfExts } from "./Utility";
 
 /** Represents any base class type that can be extended */
-export type IBaseHint = {};
+export type IBaseHint<
+  TBase extends IBaseHint = IBaseHint<any>,
+  TExts extends Array<IExtension<TBase>> = Array<IExtension<TBase>>
+> = { Extensions: TExts };
 
 /**
  * Represents a specific extensible base.
@@ -13,9 +16,6 @@ export type IBaseHint = {};
  * TBaseType interface, however.
  */
 export type IBase<TBase extends IBaseHint, EE = null> =
-  IBaseHint &
-  (
-    EE extends Array<any>
-    ? (TBase & MethodsOfExts<TBase, EE> & { Extensions: Array<IExtension<TBase>> })
-    : TBase & { Extensions: Array<IExtension<TBase>> }
-  );
+  EE extends Array<any>
+  ? (TBase & MethodsOfExts<TBase, EE> & IBaseHint<TBase, EE>)
+  : (TBase & IBaseHint<TBase>)

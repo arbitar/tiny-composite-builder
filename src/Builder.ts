@@ -29,7 +29,7 @@ export class Builder<
    * @returns New instance of ExtensibleBase object with the requested extensions present
    */
   static Create<
-    T extends IBaseHint,
+    T extends IBaseHint<T>,
     B extends Builder<T, any>,
   > (
     base: Constructor<IBase<T>>,
@@ -42,7 +42,7 @@ export class Builder<
     return built;
   }
 
-  private constructor(private _base: Constructor<IBase<TBase>>){}
+  private constructor(private _base: Constructor<TBase>){}
   private _extensions: ExtensionConstructionArray<TBase> = [];
 
   /**
