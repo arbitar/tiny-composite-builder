@@ -7,6 +7,7 @@
   "scripts": {
     "clean": "rm -rf dist/*",
     "build": "tsc",
+    "publish": "npm publish --access public",
     "prepack": "npm run clean && npm run build"
   },
   "main": "./dist/index.js",
