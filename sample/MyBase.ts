@@ -1,5 +1,5 @@
-import { IBase } from "../types/IBase";
-import { IExtension } from "../types/IExtension";
+import { IExtension } from "../types";
+import { IBase } from "../types";
 
 export interface IMyBase {
   funcBase(): "Base"
@@ -8,7 +8,7 @@ export interface IMyBase {
 export class MyBase
 implements IBase<MyBase>
 {
-  constructor(public readonly Extensions: IExtension<MyBase>[]) {}
+  constructor(public Extensions: IExtension<MyBase>[]) {}
 
   /**
    * Base

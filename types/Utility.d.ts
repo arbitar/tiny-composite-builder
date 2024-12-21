@@ -1,5 +1,5 @@
 import { IExtension } from "./IExtension";
-import { Builder } from "./Builder";
+import { Builder } from "../src/Builder";
 import { IBaseHint } from "./IBase";
 
 /**

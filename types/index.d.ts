@@ -1,2 +1,2 @@
 export { IExtension } from "./IExtension";
-export { IBase } from "./IBase";
+export { IBase, IBaseHint } from "./IBase";

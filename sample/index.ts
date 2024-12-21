@@ -13,6 +13,7 @@ const b2 = Builder.Create(MyBase, b => {
 });
   console.log(b2.funcBase());
   console.log(b2.FuncA(1));
+  b2.Extensions
 
 console.log('=====');
 

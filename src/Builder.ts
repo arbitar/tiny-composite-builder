@@ -1,6 +1,6 @@
-import { IExtension } from "./IExtension";
-import { IBase, IBaseHint } from "./IBase";
-import { ExtConsOfBuilder, Constructor, BuilderWithExt, ConstructedType, DropFirst, ExtensionConstructionArray, ConstructedExtensions } from "./Utility";
+import { IExtension } from "../types/IExtension";
+import { IBase, IBaseHint } from "../types";
+import { ExtConsOfBuilder, Constructor, BuilderWithExt, ConstructedType, DropFirst, ExtensionConstructionArray, ConstructedExtensions } from "../types/Utility";
 
 /**
  * A function that provides a consumer the ability to extend the base with extensions.
@@ -20,7 +20,7 @@ export type BuilderFunction<
  */
 export class Builder<
   TBase extends IBaseHint,
-  TExtArray extends ExtensionConstructionArray<TBase> = []
+  TExts extends ExtensionConstructionArray<TBase> = []
 >
 {
   /**
@@ -29,16 +29,16 @@ export class Builder<
    * @returns New instance of ExtensibleBase object with the requested extensions present
    */
   static Create<
-    T extends IBaseHint<T>,
-    B extends Builder<T, any>,
-  > (
-    base: Constructor<T>,
-    builder: BuilderFunction<T, Builder<T>, B>,
+    TBase extends IBaseHint<TBase>,
+    TBuilder extends Builder<TBase, any>,
+  >(
+    base: Constructor<TBase>,
+    builder: BuilderFunction<TBase, Builder<TBase>, TBuilder>,
     ...args: any
-  ): IBase<T, ConstructedExtensions<T, ExtConsOfBuilder<B>>> {
-    let instance = new Builder<T>(base);
+  ): IBase<TBase, ConstructedExtensions<TBase, ExtConsOfBuilder<TBuilder>>> {
+    let instance = new Builder<TBase>(base);
     instance = builder(instance);
-    const built = instance.make(...args) as IBase<T, ConstructedExtensions<T, ExtConsOfBuilder<B>>>;
+    const built = instance.make(...args) as IBase<TBase, ConstructedExtensions<TBase, ExtConsOfBuilder<TBuilder>>>;
     return built;
   }
 
@@ -53,7 +53,7 @@ export class Builder<
    * @returns The builder, now aware of this extension
    */
   with<
-    TSelf extends Builder<TBase, TExtArray>,
+    TSelf extends Builder<TBase, TExts>,
     TNewExt extends Constructor<IExtension<TBase>>,
     TExtArgs extends DropFirst<ConstructorParameters<TNewExt>>
   >(
@@ -62,13 +62,12 @@ export class Builder<
     ...args: TExtArgs
   ): BuilderWithExt<TBase, TSelf, ConstructedType<TNewExt>> {
     const newSelf = (this as unknown as BuilderWithExt<TBase, TSelf, ConstructedType<TNewExt>>);
-    // const ext = new extClass(newSelf, ...args) as ConstructedType<TNewExt>;
     newSelf._extensions.push([extClass, args]);
     return newSelf;
   }
 
-  private make(...args: any): IBase<TBase, ConstructedExtensions<TBase, TExtArray>> {
-    const base = new this._base([], ...args);
+  private make(...args: any): IBase<TBase, ConstructedExtensions<TBase, TExts>> {
+    const base = new this._base(...args);
 
     const extensions = this._extensions
       .map(([extClass, extraArgs]) => new extClass(base, ...extraArgs));
@@ -88,6 +87,6 @@ export class Builder<
       });
     });
 
-    return base as IBase<TBase, ConstructedExtensions<TBase, TExtArray>>;
+    return base as IBase<TBase, ConstructedExtensions<TBase, TExts>>;
   }
 }
