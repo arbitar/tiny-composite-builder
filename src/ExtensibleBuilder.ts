@@ -53,7 +53,7 @@ export class ExtensibleBuilder<
     return built;
   }
 
-  private constructor(private _base: Constructor<IExtensibleBase<TBase>>){}
+  private constructor(private _base: Constructor<TBase>){}
   private _extensions: ExtensionConstructionArray<TBase> = [];
 
   /**

@@ -1,5 +1,5 @@
 import { IExtension } from "./IExtension";
-import { ConstructedExtensions, MethodsOfExts } from "./Utility";
+import { MethodsOfExts } from "./Utility";
 
 /** Represents any base class type that can be extended */
 export type IExtensibleBaseType<
@@ -16,11 +16,8 @@ export type IExtensibleBaseType<
  * TBaseType interface, however.
  */
 export type IExtensibleBase<TBaseType extends IExtensibleBaseType, EE = null> =
-  IExtensibleBaseType<
-    TBaseType,
-    ConstructedExtensions<TBaseType, EE>
-  > & (
-    EE extends Array<any>
-    ? (TBaseType & MethodsOfExts<TBaseType, EE>)
-    : TBaseType
-  );
+  EE extends Array<any> // any extensions provided?
+  // if so, we are our base type... plus our forwarded methods... plus our Extensions list
+  ? (TBaseType & MethodsOfExts<TBaseType, EE> & IExtensibleBaseType<TBaseType, EE>)
+  // otherwise, we are just our base type... with our empty Extensions array
+  : (TBaseType & IExtensibleBaseType<TBaseType, Array<IExtension<TBaseType>>>);
