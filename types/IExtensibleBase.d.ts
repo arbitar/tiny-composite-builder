@@ -2,8 +2,8 @@ import { IExtension } from "./IExtension";
 import { MethodsOfExts } from "./Utility";
 
 /** Represents any base class type that can be extended */
-export type IExtensibleBaseType<
-  TBase extends IExtensibleBaseType = IExtensibleBaseType<any>,
+export type IBaseHint<
+  TBase extends IBaseHint = IBaseHint<any>,
   TExts extends Array<IExtension<TBase>> = Array<IExtension<TBase>>
 > = { Extensions: TExts };
 
@@ -15,9 +15,9 @@ export type IExtensibleBaseType<
  * needing to access the base will only be able to access methods and properties exposed in the
  * TBaseType interface, however.
  */
-export type IExtensibleBase<TBaseType extends IExtensibleBaseType, EE = null> =
+export type IBase<TBaseType extends IBaseHint, EE = null> =
   EE extends Array<any> // any extensions provided?
   // if so, we are our base type... plus our forwarded methods... plus our Extensions list
-  ? (TBaseType & MethodsOfExts<TBaseType, EE> & IExtensibleBaseType<TBaseType, EE>)
+  ? (TBaseType & MethodsOfExts<TBaseType, EE> & IBaseHint<TBaseType, EE>)
   // otherwise, we are just our base type... with our empty Extensions array
-  : (TBaseType & IExtensibleBaseType<TBaseType, Array<IExtension<TBaseType>>>);
+  : (TBaseType & IBaseHint<TBaseType, Array<IExtension<TBaseType>>>);

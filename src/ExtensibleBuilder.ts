@@ -1,5 +1,5 @@
 import { IExtension } from "../types/IExtension";
-import { IExtensibleBase, IExtensibleBaseType } from "../types/IExtensibleBase";
+import { IBase, IBaseHint } from "../types/IExtensibleBase";
 import { ExtConsOfBuilder, Constructor, BuilderWithExt, ConstructedType, DropFirst, ExtensionConstructionArray, ConstructedExtensions } from "../types/Utility";
 
 /**
@@ -8,30 +8,19 @@ import { ExtConsOfBuilder, Constructor, BuilderWithExt, ConstructedType, DropFir
  * @typeparam A: original form of the builder
  * @typeparam B: new form of the builder
  */
-export type ExtensibleBuilderFunction<
-  T extends IExtensibleBaseType,
-  A extends ExtensibleBuilder<T>,
-  B extends ExtensibleBuilder<T>
+export type BuilderFunction<
+  T extends IBaseHint,
+  A extends Builder<T>,
+  B extends Builder<T>
 > = (b: A) => B;
 
 /**
  * A builder that should produce a base
  * @typeparam T extends ExtensibleBase: what kind of extensible object are we creating?
- * 
- * @example
- * Suggestion: On your base class, add a helper function for creation:
- * ```
- * class MyBase implements IExtensibleBase<MyBase> {
- *   static Create = <TNext extends ExtensibleBuilder<MyBase, any>>(
- *     b: ExtensibleBuilderFunction<MyBase, ExtensibleBuilder<MyBase>, TNext>,
- *     ...args: ConstructorParameters<typeof MyBase>
- *   ) => ExtensibleBuilder.Create(MyBase, b, ...args);
- * }
- * ```
  */
-export class ExtensibleBuilder<
-  TBase extends IExtensibleBaseType,
-  TExtArray extends ExtensionConstructionArray<TBase> = []
+export class Builder<
+  TBase extends IBaseHint,
+  TExts extends ExtensionConstructionArray<TBase> = []
 >
 {
   /**
@@ -40,16 +29,16 @@ export class ExtensibleBuilder<
    * @returns New instance of ExtensibleBase object with the requested extensions present
    */
   static Create<
-    T extends IExtensibleBaseType<T>,
-    B extends ExtensibleBuilder<T, any>,
+    TBase extends IBaseHint<TBase>,
+    TBuilder extends Builder<TBase, any>,
   >(
-    base: Constructor<T>,
-    builder: ExtensibleBuilderFunction<T, ExtensibleBuilder<T>, B>,
+    base: Constructor<TBase>,
+    builder: BuilderFunction<TBase, Builder<TBase>, TBuilder>,
     ...args: any
-  ): IExtensibleBase<T, ConstructedExtensions<T, ExtConsOfBuilder<B>>> {
-    let instance = new ExtensibleBuilder<T>(base);
+  ): IBase<TBase, ConstructedExtensions<TBase, ExtConsOfBuilder<TBuilder>>> {
+    let instance = new Builder<TBase>(base);
     instance = builder(instance);
-    const built = instance.make(...args) as IExtensibleBase<T, ConstructedExtensions<T, ExtConsOfBuilder<B>>>;
+    const built = instance.make(...args) as IBase<TBase, ConstructedExtensions<TBase, ExtConsOfBuilder<TBuilder>>>;
     return built;
   }
 
@@ -64,7 +53,7 @@ export class ExtensibleBuilder<
    * @returns The builder, now aware of this extension
    */
   with<
-    TSelf extends ExtensibleBuilder<TBase, TExtArray>,
+    TSelf extends Builder<TBase, TExts>,
     TNewExt extends Constructor<IExtension<TBase>>,
     TExtArgs extends DropFirst<ConstructorParameters<TNewExt>>
   >(
@@ -77,7 +66,7 @@ export class ExtensibleBuilder<
     return newSelf;
   }
 
-  private make(...args: any): IExtensibleBase<TBase, ConstructedExtensions<TBase, TExtArray>> {
+  private make(...args: any): IBase<TBase, ConstructedExtensions<TBase, TExts>> {
     const base = new this._base(...args);
 
     const extensions = this._extensions
@@ -96,6 +85,6 @@ export class ExtensibleBuilder<
       });
     });
 
-    return base as IExtensibleBase<TBase, ConstructedExtensions<TBase, TExtArray>>;
+    return base as IBase<TBase, ConstructedExtensions<TBase, TExts>>;
   }
 }

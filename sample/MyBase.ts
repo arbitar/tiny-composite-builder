@@ -1,12 +1,12 @@
 import { IExtension } from "../types";
-import { IExtensibleBase } from "../types/IExtensibleBase";
+import { IBase } from "../types/IExtensibleBase";
 
 export interface IMyBase {
   funcBase(): "Base"
 }
 
 export class MyBase
-implements IExtensibleBase<MyBase>
+implements IBase<MyBase>
 {
   constructor(public Extensions: IExtension<MyBase>[]) {}
 

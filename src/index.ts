@@ -1,1 +1,1 @@
-export { ExtensibleBuilder, ExtensibleBuilderFunction } from "./ExtensibleBuilder";
+export { Builder, BuilderFunction } from "./ExtensibleBuilder";
