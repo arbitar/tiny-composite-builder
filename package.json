@@ -2,7 +2,7 @@
   "name": "@aurbi/extensible",
   "author": "aurbi <npm@arbi.in>",
   "description": "Framework for taking base objects and adding extensions using a builder pattern, but with full and strict compile-time type system support.",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf dist/*",
