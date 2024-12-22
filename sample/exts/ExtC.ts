@@ -27,4 +27,8 @@ implements IExtension<MyBase>
     // if the other extension is missing, go with the fallback
     return this.fallback;
   }
+
+  getFallback(): typeof this.fallback {
+    return this.fallback;
+  }
 }
