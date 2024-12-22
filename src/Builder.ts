@@ -98,8 +98,9 @@ export class Builder<
         .filter(this._methodNameFilter);
 
       methods.forEach((m) => {
-        (base as any)[m] = (...args: any[]) => 
-          (this._extensions as any)[i][m.substring(1)](...args)
+        (base as any)[m.substring(1)] = (...args: any[]) => {
+          return (extensions as any)[i][m](...args)
+        }
       });
     });
 
