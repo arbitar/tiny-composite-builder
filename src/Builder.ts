@@ -44,6 +44,7 @@ export class Builder<
 
   private constructor(private _base: Constructor<TBase>){}
   private _extensions: ExtensionConstructionArray<TBase> = [];
+  private _methodNameFilter: (m: string) => boolean = (m) => m.startsWith("$");
 
   /**
    * Add a compatible extension to be grafted onto the base.
@@ -66,6 +67,21 @@ export class Builder<
     return newSelf;
   }
 
+  /**
+   * Change the default method name filter for creating extension forwarding functions in the base.
+   * 
+   * By default, this is `(m) => m.startsWith('$')`, meaning only public functions that start with
+   * a dollar sign ($) have method forwarders constructed on the base instance.
+   * 
+   * You can disable method forwarding entirely by just setting this to `() => false`.
+   * @param f method name filter
+   * @returns The builder, with modified filter.
+   */
+  withMethodNameFilter(f: typeof this._methodNameFilter): this {
+    this._methodNameFilter = f;
+    return this;
+  }
+
   private make(...args: any): IBase<TBase, ConstructedExtensions<TBase, TExts>> {
     const base = new this._base(...args);
 
@@ -79,7 +95,7 @@ export class Builder<
       const methods = Object.getOwnPropertyNames(Object.getPrototypeOf(e))
         .filter(m => typeof e[m as keyof typeof e] === "function")
         .filter(m => m !== "constructor")
-        .filter(m => m.startsWith("$"));
+        .filter(this._methodNameFilter);
 
       methods.forEach((m) => {
         (base as any)[m] = (...args: any[]) => 
