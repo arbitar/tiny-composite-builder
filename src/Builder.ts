@@ -77,7 +77,7 @@ export class Builder<
    * @param f method name filter
    * @returns The builder, with modified filter.
    */
-  withMethodNameFilter(f: typeof this._methodNameFilter): this {
+  withMethodNameFilter(f: (m: string) => boolean): this {
     this._methodNameFilter = f;
     return this;
   }

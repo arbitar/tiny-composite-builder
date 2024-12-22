@@ -12,7 +12,7 @@ implements IExtension<MyBase>
   /**
    * Ext C
    */
-  $FuncC(whatever: any): (typeof this.fallback)|(ReturnType<ExtB["$FuncB"]>) {
+  $FuncC(whatever: any): string {
     // this ought to never be true.
     if (this.Base.funcBase() != "Base") {
       throw new Error("nah");
