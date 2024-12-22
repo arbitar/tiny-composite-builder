@@ -1,22 +1,30 @@
 import { IExtension } from "../../types";
 import { MyBase } from "../MyBase";
+import { ExtB } from "./ExtB";
 
 export class ExtC
 implements IExtension<MyBase>
 {
   constructor (public Base: MyBase) {}
 
-  a = 1;
-  private val: "C" = "C";
+  private fallback = "C (B was not found)";
 
   /**
    * Ext C
    */
-  $FuncC(whatever: any): "C" {
-    console.log(this.Base);
+  $FuncC(whatever: any): (typeof this.fallback)|(ReturnType<ExtB["$FuncB"]>) {
+    // this ought to never be true.
     if (this.Base.funcBase() != "Base") {
       throw new Error("nah");
     }
-    return this.val;
+
+    // see if we can grab another extension.
+    const extB = this.Base.Extensions.find(e => e instanceof ExtB);
+    if (extB) {
+      return extB.$FuncB(whatever);
+    }
+    
+    // if the other extension is missing, go with the fallback
+    return this.fallback;
   }
 }

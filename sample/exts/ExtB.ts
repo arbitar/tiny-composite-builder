@@ -17,6 +17,10 @@ implements IExtension<MyBase>
   }
 
   otherFuncB(toast: string): "BB" {
+    if (this.Base.funcBase() !== "Base") {
+      throw new Error("nah");
+    }
+
     return "BB";
   }
 
