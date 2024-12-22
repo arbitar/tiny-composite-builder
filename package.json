@@ -1,7 +1,8 @@
 {
-  "name": "@aurbi/extensible",
+  "name": "@aurbi/tiny-composite-builder",
   "author": "aurbi <npm@arbi.in>",
-  "description": "Framework for taking base objects and adding extensions using a builder pattern, but with full and strict compile-time type system support.",
+  "keywords": ["definitely-typed", "builder pattern"],
+  "description": "Small framework for taking base objects and adding extensions using a builder pattern, but with full and strict compile-time type support.",
   "version": "1.0.6",
   "license": "MIT",
   "scripts": {
@@ -20,10 +21,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arbitar/extensible.git"
+    "url": "git+https://github.com/arbitar/tiny-builder.git"
   },
   "bugs": {
-    "url": "https://github.com/arbitar/extensible/issues"
+    "url": "https://github.com/arbitar/tiny-builder/issues"
   },
-  "homepage": "https://github.com/arbitar/extensible#readme"
+  "homepage": "https://github.com/arbitar/tiny-builder#readme"
 }
