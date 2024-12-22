@@ -1,9 +1,12 @@
 {
   "name": "@aurbi/tiny-composite-builder",
   "author": "aurbi <npm@arbi.in>",
-  "keywords": ["definitely-typed", "builder pattern"],
+  "keywords": [
+    "definitely-typed",
+    "builder pattern"
+  ],
   "description": "Small framework for taking base objects and adding extensions using a builder pattern, but with full and strict compile-time type support.",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf dist/*",
