@@ -24,10 +24,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/arbitar/tiny-builder.git"
+    "url": "git+https://github.com/arbitar/tiny-composite-builder.git"
   },
   "bugs": {
-    "url": "https://github.com/arbitar/tiny-builder/issues"
+    "url": "https://github.com/arbitar/tiny-composite-builder/issues"
   },
-  "homepage": "https://github.com/arbitar/tiny-builder#readme"
+  "homepage": "https://github.com/arbitar/tiny-composite-builder#readme"
 }
