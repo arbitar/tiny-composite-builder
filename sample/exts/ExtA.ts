@@ -1,4 +1,4 @@
-import { IExtension } from "../../types";
+import { IExtension } from "../../src";
 import { MyBase } from "../MyBase";
 
 export class ExtA

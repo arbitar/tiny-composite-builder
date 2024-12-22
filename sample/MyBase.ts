@@ -1,5 +1,4 @@
-import { IExtension } from "../types";
-import { IBase } from "../types";
+import { IExtension, IBase } from "../src";
 
 export interface IMyBase {
   funcBase(): "Base"

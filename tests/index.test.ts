@@ -1,7 +1,7 @@
 import { describe, expect, expectTypeOf, test } from 'vitest';
 import { Builder } from '../src/Builder';
-import { IBase } from '../types/IBase';
-import { IExtension } from '../types/IExtension';
+import { IBase } from '../src/IBase';
+import { IExtension } from '../src/IExtension';
 
 import { MyBase } from "../sample/MyBase";
 import { ExtA, ExtB, ExtC } from "../sample/exts";

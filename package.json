@@ -7,11 +7,12 @@
   "scripts": {
     "clean": "rm -rf dist/*",
     "build": "tsc",
-    "prepack": "npm run clean && npm run build",
+    "copy_defs": "cp src/*.d.ts dist/",
+    "prepack": "npm run clean && npm run copy_defs && npm run build",
     "test": "vitest"
   },
   "main": "./dist/index.js",
-  "types": "./types/index.d.ts",
+  "types": "./dist/index.d.ts",
   "devDependencies": {
     "@types/node": "^22.10.2",
     "typescript": "^5.7.2",

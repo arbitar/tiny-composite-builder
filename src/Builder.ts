@@ -1,6 +1,6 @@
-import { IExtension } from "../types/IExtension";
-import { IBase, IBaseHint } from "../types";
-import { ExtConsOfBuilder, Constructor, BuilderWithExt, ConstructedType, DropFirst, ExtensionConstructionArray, ConstructedExtensions } from "../types/Utility";
+import { IBaseHint, IBase } from "./IBase";
+import { IExtension } from "./IExtension";
+import { ExtConsOfBuilder, Constructor, BuilderWithExt, ConstructedType, DropFirst, ExtensionConstructionArray, ConstructedExtensions } from "./Utility";
 
 /**
  * A function that provides a consumer the ability to extend the base with extensions.
