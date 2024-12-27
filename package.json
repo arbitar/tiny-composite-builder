@@ -6,7 +6,7 @@
     "builder pattern"
   ],
   "description": "Small framework for taking base objects and adding extensions using a builder pattern, but with full and strict compile-time type support.",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "license": "MIT",
   "scripts": {
     "clean": "rm -rf dist/*",
