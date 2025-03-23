@@ -73,9 +73,12 @@ class ExtB implements IExtension<MyBase> {
   constructor (public Base: MyBase, private _output: string) {}
 
   $FuncB() {
-    return this.Base.Extensions.find(b => b instanceof ExtA)
-      ? b.getValue()
-      : "extension b not loaded";
+    const extA = this.Base.Extensions.find(b => b instanceof ExtA)
+    if (!extA) {
+      throw new Error("extension A not loaded")
+    }
+
+    return extA.getValue()
   }
 }
 
