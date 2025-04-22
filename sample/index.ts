@@ -37,7 +37,10 @@ console.log('=====');
     
     // here, you can see that ExtB requires some construction parameters.
     // try removing the empty string... your editor should yell at you (or tsc).
-    const wb = wa.with(ExtB, "");
+    const wb = wa.with(ExtB, {
+      a_required: "",
+      an_optional: "",
+    });
     
     return wb;
   });
@@ -61,7 +64,9 @@ console.log('=====');
 {
   // here's a condensed form of the above.
   const b4 = Builder.Create(MyBase, b => b
-    .with(ExtB, "")
+    .with(ExtB, {
+      a_required: "",
+    })
     .with(ExtC)
   );
 

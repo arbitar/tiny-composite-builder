@@ -14,6 +14,8 @@ export type BuilderFunction<
   B extends Builder<T>
 > = (b: A) => B;
 
+export type ConstructorParams<T extends new (...args: any) => any> = T extends new (...args: infer P) => any ? P : never;
+
 /**
  * A builder that should produce a base
  * @typeparam T extends ExtensibleBase: what kind of extensible object are we creating?
@@ -55,12 +57,11 @@ export class Builder<
    */
   with<
     TSelf extends Builder<TBase, TExts>,
-    TNewExt extends Constructor<IExtension<TBase>>,
-    TExtArgs extends DropFirst<ConstructorParameters<TNewExt>>
+    TNewExt extends Constructor<IExtension<TBase>>
   >(
     this: TSelf,
     extClass: TNewExt,
-    ...args: TExtArgs
+    ...args: DropFirst<ConstructorParams<TNewExt>>
   ): BuilderWithExt<TBase, TSelf, ConstructedType<TNewExt>> {
     const newSelf = (this as unknown as BuilderWithExt<TBase, TSelf, ConstructedType<TNewExt>>);
     newSelf._extensions.push([extClass, args]);
